@@ -15,4 +15,24 @@ This script does not have a loop internal to it and should be set to a cron job 
   sudo cp ./chip_batt_autoshutdown.sh /usr/bin/
   ```
 
-Refer to Debian docs on setting up cron jobs
+# Cron Job Setup
+
+Edit the root crontab
+
+  ```
+  sudo crontab -e
+  ```
+
+For 5 Minute check, enter:
+
+  ```
+  */5 * * * * /usr/bin/chip_batt_autoshutdown.sh
+  ```
+
+For 10 Minute check, enter:
+
+  ```
+  */10 * * * * /usr/bin/chip_batt_autoshutdown.sh
+  ```
+
+
