@@ -11,7 +11,8 @@ This script does not have a loop internal to it and should be set to a cron job 
 
   ```
   git clone https://github.com/xtacocorex/chip_batt_autoshutdown.git
-  cd chip_batt_autoshutdown.sh
+  cd chip_batt_autoshutdown
+  chmod +x chip_batt_autoshutdown.sh
   sudo cp ./chip_batt_autoshutdown.sh /usr/bin/
   ```
 
