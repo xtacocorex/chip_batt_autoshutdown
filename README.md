@@ -47,6 +47,6 @@ Then do:
 To check the status of the script:
 
   ```
-  tail -f /var/log/chip_bat.log
+  tail -f /var/log/chip_batt.log
   ```
 
