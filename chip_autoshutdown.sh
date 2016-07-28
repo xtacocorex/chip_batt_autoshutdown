@@ -22,7 +22,7 @@ MINCHARGECURRENT=10
 readonly SCRIPT_NAME=$(basename $0)
 
 log() {
-    echo "$@"
+    echo "`date -u`" "$@"
     #logger -p user.notice -t $SCRIPT_NAME "$@"
 }
 
