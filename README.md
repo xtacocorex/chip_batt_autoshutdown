@@ -16,6 +16,8 @@ This script does not have a loop internal to it and should be set to a cron job 
   sudo cp ./chip_autoshutdown.sh /usr/bin/
   ```
 
+If running the script manually, be sure to run with sudo
+
 # Cron Job Setup
 
 Edit the root crontab
@@ -42,4 +44,9 @@ Then do:
   sudo service cron restart
   ```
 
+To check the status of the script:
+
+  ```
+  tail -f /var/log/chip_bat.log
+  ```
 
