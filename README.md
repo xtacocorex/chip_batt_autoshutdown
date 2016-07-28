@@ -13,7 +13,7 @@ This script does not have a loop internal to it and should be set to a cron job 
   git clone https://github.com/xtacocorex/chip_batt_autoshutdown.git
   cd chip_batt_autoshutdown
   chmod +x chip_batt_autoshutdown.sh
-  sudo cp ./chip_batt_autoshutdown.sh /usr/bin/
+  sudo cp ./chip_autoshutdown.sh /usr/bin/
   ```
 
 # Cron Job Setup
@@ -27,13 +27,19 @@ Edit the root crontab
 For 5 Minute check, enter:
 
   ```
-  */5 * * * * /usr/bin/chip_batt_autoshutdown.sh
+  */5 * * * * /usr/bin/chip_autoshutdown.sh >> /var/log/chip_batt.log 2>&1
   ```
 
 For 10 Minute check, enter:
 
   ```
-  */10 * * * * /usr/bin/chip_batt_autoshutdown.sh
+  */10 * * * * /usr/bin/chip_autoshutdown.sh >> /var/log/chip_batt.log 2>&1
+  ```
+
+Then do:
+
+  ```
+  sudo service cron restart
   ```
 
 
