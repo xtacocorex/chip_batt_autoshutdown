@@ -44,18 +44,19 @@ if [ $BAT_EXIST == 1 ]; then
     BAT_VOLT_FLOAT=$(echo "($BAT_BIN*1.1)"|bc)
     # CONVERT TO AN INTEGER
     BAT_VOLT=${BAT_VOLT_FLOAT%.*}
-        
+
+    # GET THE CHARGE CURRENT
+    BAT_ICHG_MSB=$(/usr/sbin/i2cget -y -f 0 0x34 0x7A)
+    BAT_ICHG_LSB=$(/usr/sbin/i2cget -y -f 0 0x34 0x7B)
+    BAT_ICHG_BIN=$(( $(($BAT_ICHG_MSB << 4)) | $(($(($BAT_ICHG_LSB & 0x0F)) )) ))
+    BAT_ICHG_FLOAT=$(echo "($BAT_ICHG_BIN*0.5)"|bc)
+    # CONVERT TO AN INTEGER
+    BAT_ICHG=${BAT_ICHG_FLOAT%.*}
+    
     # CHECK BATTERY LEVEL AGAINST MINVOLTAGELEVEL
     if [ $BAT_VOLT -le $MINVOLTAGELEVEL ]; then
         log "CHIP BATTERY VOLTAGE IS LESS THAN $MINVOLTAGELEVEL"
         log "CHECKING FOR CHIP BATTERY CHARGING"
-        # GET THE CHARGE CURRENT
-        BAT_ICHG_MSB=$(/usr/sbin/i2cget -y -f 0 0x34 0x7A)
-        BAT_ICHG_LSB=$(/usr/sbin/i2cget -y -f 0 0x34 0x7B)
-        BAT_ICHG_BIN=$(( $(($BAT_ICHG_MSB << 4)) | $(($(($BAT_ICHG_LSB & 0x0F)) )) ))
-        BAT_ICHG_FLOAT=$(echo "($BAT_ICHG_BIN*0.5)"|bc)
-        # CONVERT TO AN INTEGER
-        BAT_ICHG=${BAT_ICHG_FLOAT%.*}
     
         # IF CHARGE CURRENT IS LESS THAN MINCHARGECURRENT, WE NEED TO SHUTDOWN
         if [ $BAT_ICHG -le $MINCHARGECURRENT ]; then
@@ -66,6 +67,12 @@ if [ $BAT_EXIST == 1 ]; then
         fi
     else
         log "CHIP BATTERY LEVEL IS GOOD"
+    fi
+    
+    if [ $BAT_ICHG -le $MINCHARGECURRENT ]; then
+	log "CHIP IS ON BATTERY POWER"
+    else
+	log "CHIP IS ON WALL POWER"
     fi
 
 fi
