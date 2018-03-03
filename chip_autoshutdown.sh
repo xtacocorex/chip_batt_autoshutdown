@@ -71,6 +71,8 @@ if [ $BAT_EXIST == 1 ]; then
     
     if [ $BAT_ICHG -le $MINCHARGECURRENT ]; then
 	log "CHIP IS ON BATTERY POWER"
+    else
+	log "CHIP IS ON WALL POWER"
     fi
 
 fi
